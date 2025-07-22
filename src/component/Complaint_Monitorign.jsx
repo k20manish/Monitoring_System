@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { UserCircle } from "lucide-react";
 
-function Complaint_Monitoring() {
+function Complaint_Monitoring({ onSubmitComplaint }) {
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
@@ -13,6 +15,7 @@ function Complaint_Monitoring() {
     complaintType: "",
     modeOfComplaint: "",
     description: "",
+    submittedTo: "",
   });
 
   const handleChange = (e) => {
@@ -22,170 +25,170 @@ function Complaint_Monitoring() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Complaint Submitted!");
+    onSubmitComplaint({ ...formData, timestamp: new Date().toISOString() });
+    alert("Complaint submitted!");
+    setFormData({
+      name: "",
+      mobile: "",
+      village: "",
+      block: "",
+      panchayat: "",
+      nagarPanchayat: "",
+      nagarParisad: "",
+      nagarNigam: "",
+      complaintType: "",
+      modeOfComplaint: "",
+      description: "",
+      submittedTo: "",
+    });
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-4xl h-full overflow-hidden">
-      <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">
-        Complaint Monitoring & Redressal Portal
-      </h2>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-4xl mx-auto p-8 bg-white rounded-3xl shadow-2xl"
+    >
+      <div className="flex items-center mb-6">
+        <UserCircle className="text-blue-500" size={32} />
+        <h2 className="ml-3 text-3xl font-bold text-gray-800">
+          Complaint Portal
+        </h2>
+      </div>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto">
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Name</label>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
-            type="text"
             name="name"
-            placeholder="Enter your name"
-            className="w-full border p-2 rounded-md"
             value={formData.name}
             onChange={handleChange}
+            placeholder="Name"
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            required
           />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Mobile</label>
           <input
-            type="text"
             name="mobile"
-            placeholder="Enter mobile number"
-            className="w-full border p-2 rounded-md"
             value={formData.mobile}
             onChange={handleChange}
+            placeholder="Mobile Number"
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            required
           />
-        </div>
-
-        <div className="sm:col-span-2">
-          <label className="block mb-1 text-sm text-gray-700">Village</label>
           <input
-            type="text"
             name="village"
-            placeholder="Enter village name"
-            className="w-full border p-2 rounded-md"
             value={formData.village}
             onChange={handleChange}
+            placeholder="Village"
+            className="sm:col-span-2 w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           />
         </div>
 
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Block</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <select
             name="block"
-            className="w-full border p-2 rounded-md"
             value={formData.block}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="">Select Block</option>
-            <option value="Block A">Block A</option>
-            <option value="Block B">Block B</option>
+            <option>Block A</option>
+            <option>Block B</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Panchayat</label>
           <select
             name="panchayat"
-            className="w-full border p-2 rounded-md"
             value={formData.panchayat}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="">Select Panchayat</option>
-            <option value="Panchayat 1">Panchayat 1</option>
-            <option value="Panchayat 2">Panchayat 2</option>
+            <option>Panchayat 1</option>
+            <option>Panchayat 2</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Nagar Panchayat</label>
           <select
             name="nagarPanchayat"
-            className="w-full border p-2 rounded-md"
             value={formData.nagarPanchayat}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="">Select Nagar Panchayat</option>
-            <option value="Nagar Panchayat 1">Nagar Panchayat 1</option>
+            <option>Nagar Panchayat 1</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Nagar Parisad</label>
           <select
             name="nagarParisad"
-            className="w-full border p-2 rounded-md"
             value={formData.nagarParisad}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="">Select Nagar Parisad</option>
-            <option value="Nagar Parisad 1">Nagar Parisad 1</option>
+            <option>Nagar Parisad 1</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Nagar Nigam</label>
           <select
             name="nagarNigam"
-            className="w-full border p-2 rounded-md"
             value={formData.nagarNigam}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
             <option value="">Select Nagar Nigam</option>
-            <option value="Nagar Nigam 1">Nagar Nigam 1</option>
+            <option>Nagar Nigam 1</option>
           </select>
         </div>
 
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Complaint Type</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <select
             name="complaintType"
-            className="w-full border p-2 rounded-md"
             value={formData.complaintType}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
-            <option value="">Select Complaint Type</option>
-            <option value="Nal Ka Jal">Nal Ka Jal</option>
-            <option value="Electricity">Electricity</option>
+            <option value="">Complaint Type</option>
+            <option>Nal Ka Jal</option>
+            <option>Electricity</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm text-gray-700">Mode of Complaint</label>
           <select
             name="modeOfComplaint"
-            className="w-full border p-2 rounded-md"
             value={formData.modeOfComplaint}
             onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           >
-            <option value="">Select Mode</option>
-            <option value="WhatsApp">WhatsApp</option>
-            <option value="Mobile">Mobile</option>
-            <option value="Written">Written Application</option>
+            <option value="">Mode of Complaint</option>
+            <option>WhatsApp</option>
+            <option>Mobile</option>
+            <option>Written Application</option>
           </select>
         </div>
 
-        <div className="sm:col-span-2">
-          <label className="block mb-1 text-sm text-gray-700">Complaint Description</label>
-          <textarea
-            name="description"
-            rows="3"
-            placeholder="Enter complaint details"
-            className="w-full border p-2 rounded-md resize-none"
-            value={formData.description}
-            onChange={handleChange}
-          ></textarea>
-        </div>
+        <select
+          name="submittedTo"
+          value={formData.submittedTo}
+          onChange={handleChange}
+          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+          required
+        >
+          <option value="">Submit To</option>
+          <option>Panchayat</option>
+          <option>Block</option>
+          <option>Nagar Nigam</option>
+          <option>Nagar Parisad</option>
+        </select>
 
-        <div className="sm:col-span-2">
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
-          >
-            Submit Complaint
-          </button>
-        </div>
+        <textarea
+          name="description"
+          rows="4"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Complaint Details"
+          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
+        />
+
+        <button
+          type="submit"
+          className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-2xl hover:from-blue-600 hover:to-purple-600 transition font-semibold shadow-lg"
+        >
+          Submit Complaint
+        </button>
       </form>
-    </div>
+    </motion.div>
   );
 }
 
